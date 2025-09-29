@@ -15,7 +15,7 @@ interface Package {
   dailyRate: number
   image: string | null
   categoryId: string
-  items: PackageListing[0]["items"]
+  items: PackageListing["items"]
   searchTags: string
   category: {
     name: string

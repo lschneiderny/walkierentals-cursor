@@ -5,7 +5,7 @@ import { mockRetailItems } from "@/lib/mock-data"
 export async function GET() {
   try {
     // Try to get store items from database first
-    // @ts-ignore
+    // @ts-expect-error
     const storeItems = await prisma.retailItem.findMany({
       include: {
         category: true

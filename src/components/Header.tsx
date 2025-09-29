@@ -4,7 +4,6 @@ import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
 import { UserRole } from "@prisma/client"
 import { useCart } from "@/lib/cart-context"
-import CartSidebar from "./CartSidebar"
 import { ShoppingCart } from "lucide-react"
 
 export default function Header() {
@@ -83,7 +82,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <CartSidebar />
     </header>
   )
 }
