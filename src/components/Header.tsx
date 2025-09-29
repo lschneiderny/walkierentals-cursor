@@ -31,11 +31,6 @@ export default function Header() {
                 >
                   Sign Out
                 </button>
-                {(session.user as any)?.role === UserRole.EMPLOYEE && (
-                  <Link href="/admin" className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm">
-                    Admin
-                  </Link>
-                )}
               </div>
             ) : (
               <Link href="/auth/signin" className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm">
