@@ -5,7 +5,8 @@ import { mockRetailItems } from "@/lib/mock-data"
 export async function GET() {
   try {
     // Try to get store items from database first
-    const storeItems = await prisma.storeItem.findMany({
+    // @ts-ignore
+    const storeItems = await prisma.retailItem.findMany({
       include: {
         category: true
       },
@@ -19,7 +20,10 @@ export async function GET() {
 
     // If no store items in database, return mock data
     if (storeItems.length === 0) {
-      return NextResponse.json(mockRetailItems)
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json([], { status: 200 });
+      }
+      return NextResponse.json(mockRetailItems);
     }
 
     return NextResponse.json(storeItems)

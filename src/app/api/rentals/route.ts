@@ -19,7 +19,10 @@ export async function GET() {
 
     // If no rentals in database, return mock data
     if (rentals.length === 0) {
-      return NextResponse.json(mockRentals)
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json([], { status: 200 });
+      }
+      return NextResponse.json(mockRentals);
     }
 
     return NextResponse.json(rentals)

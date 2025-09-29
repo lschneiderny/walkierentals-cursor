@@ -16,7 +16,10 @@ export async function GET() {
 
     // If no packages in database, return mock data
     if (packages.length === 0) {
-      return NextResponse.json(mockPackages)
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json([], { status: 200 });
+      }
+      return NextResponse.json(mockPackages);
     }
 
     return NextResponse.json(packages)
