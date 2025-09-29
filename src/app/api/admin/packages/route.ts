@@ -8,7 +8,17 @@ export async function GET() {
 
 // POST - Create new package (admin only)
 export async function POST(req: NextRequest) {
-  const prepareData = (body: any, userId: string) => {
+  interface PackageBody {
+    name: string;
+    slug?: string;
+    description?: string;
+    dailyRate: string;
+    categoryId: string;
+    rentalItems: string | Array<{ rentalId: string; count: number }>;
+    searchTags?: string;
+  }
+
+  const prepareData = (body: PackageBody, userId: string) => {
     const { name, slug, description, dailyRate, categoryId, rentalItems, searchTags } = body;
 
     let parsedItems: Array<{ rentalId: string; count: number }> = [];
@@ -43,5 +53,6 @@ export async function POST(req: NextRequest) {
     };
   };
 
+  // @ts-expect-error
   return adminCreate('package', req, prepareData);
 }

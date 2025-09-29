@@ -99,7 +99,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         // Convert date strings back to Date objects
         const cartWithDates = {
           ...parsedCart,
-          items: parsedCart.items.map((item: any) => ({
+          items: parsedCart.items.map((item: CartItem) => ({
             ...item,
             startDate: item.startDate ? new Date(item.startDate) : undefined,
             endDate: item.endDate ? new Date(item.endDate) : undefined,

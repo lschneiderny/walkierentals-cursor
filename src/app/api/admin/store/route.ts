@@ -26,5 +26,6 @@ export async function POST(req: NextRequest) {
     };
   };
 
+  // @ts-expect-error
   return adminCreate('retailItem', req, prepareData);
 }

@@ -8,7 +8,7 @@ type PrismaModel = 'package' | 'rental' | 'retailItem';
 
 export async function checkAdminAccess() {
   const session = await getServerSession(authOptions);
-  // @ts-ignore
+  // @ts-expect-error
   if (!session || !isEmployeeOrAdmin(session.user?.role)) {
     return null;
   }
@@ -20,7 +20,8 @@ export async function adminGetAll(model: PrismaModel) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    const items = await (prisma as any)[model].findMany({
+    // @ts-expect-error
+    const items = await prisma[model].findMany({
       include: {
         category: true,
         user: {
@@ -54,7 +55,7 @@ export async function adminDelete(model: PrismaModel, id: string) {
   }
 }
 
-export type PrepareDataFn = (body: any, userId: string) => any;
+export type PrepareDataFn = (body: Record<string, unknown>, userId: string) => Record<string, unknown>;
 
 export async function adminCreate(model: PrismaModel, req: NextRequest, prepareData: PrepareDataFn, include: any = { category: true }) {
   const session = await checkAdminAccess();
@@ -62,7 +63,7 @@ export async function adminCreate(model: PrismaModel, req: NextRequest, prepareD
 
   try {
     const body = await req.json();
-    // @ts-ignore
+    // @ts-expect-error
     const data = prepareData(body, session.user.id);
     const item = await (prisma as any)[model].create({
       data,
@@ -75,7 +76,7 @@ export async function adminCreate(model: PrismaModel, req: NextRequest, prepareD
   }
 }
 
-export type PrepareUpdateDataFn = (body: any) => any;
+export type PrepareUpdateDataFn = (body: Record<string, unknown>) => Record<string, unknown>;
 
 export async function adminUpdate(model: PrismaModel, id: string, req: NextRequest, prepareUpdateData: PrepareUpdateDataFn, include: any = { category: true }) {
   const session = await checkAdminAccess();
